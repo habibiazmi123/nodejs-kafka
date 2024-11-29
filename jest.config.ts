@@ -3,7 +3,7 @@
  * https://jestjs.io/docs/configuration
  */
 
-import type {Config} from 'jest';
+import type { Config } from "jest";
 
 const config: Config = {
   preset: "ts-jest",
@@ -13,7 +13,7 @@ const config: Config = {
   coverageDirectory: "coverage",
   coveragePathIgnorePatterns: ["/node_modules"],
   coverageProvider: "v8",
-  moduleDirectories: ["node_modules", "src" ],
+  moduleDirectories: ["node_modules", "src"],
 };
 
 export default config;
