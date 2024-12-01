@@ -3,6 +3,7 @@ import { CatalogService } from "../services/catalog.service";
 import { CatalogRepository } from "../repository/catalog.repository";
 import { RequestValidator } from "../utils/requestValidator";
 import { CreateProductRequest, UpdateProductRequest } from "../dto/product.dto";
+import { logger } from "../utils";
 
 const router = express.Router();
 
@@ -12,8 +13,8 @@ router.get(
   "/products",
   async (req: Request, res: Response, next: NextFunction): Promise<any> => {
     
-    const limit = Number(req.query['limit']);
-    const offset = Number(req.query['offset']);
+    const limit = Number(req.query['limit']) || 10;
+    const offset = Number(req.query['offset']) || 0;
 
     try {
       const data = await catalogService.getProducts(limit, offset);
@@ -55,7 +56,8 @@ router.get(
       return res.status(200).json(data);
     } catch (error) {
       const err = error as Error
-      return res.status(500).json(err.message);
+      logger.error(err)
+      return next(err.message);
     }
   },
 );
